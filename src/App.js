@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import HomePage from "./pages/homepage/homepage.component";
 import { Route, Switch, Redirect } from "react-router-dom";
@@ -17,38 +17,29 @@ const HatsPage = () => (
 	</div>
 );
 
-class App extends React.Component {
-	unsubscribeFromAuth = null;
-
-	componentDidMount() {
-		const { checkUserSession } = this.props;
+const App = ({ checkUserSession, currentUser }) => {
+	useEffect(() => {
 		checkUserSession();
-	}
+	}, [checkUserSession]);
 
-	componentWillUnmount() {
-		this.unsubscribeFromAuth();
-	}
-
-	render() {
-		return (
-			<div className='App'>
-				<Header />
-				<Switch>
-					<Route exact path='/' component={HomePage} />
-					<Route path='/shop' component={ShopPage} />
-					<Route
-						exact
-						path='/signin'
-						render={() =>
-							this.props.currentUser ? <Redirect to='/' /> : <SignInAndSignUp />
-						}
-					/>
-					<Route exact path='/checkout' component={CheckoutPage} />
-				</Switch>
-			</div>
-		);
-	}
-}
+	return (
+		<div className='App'>
+			<Header />
+			<Switch>
+				<Route exact path='/' component={HomePage} />
+				<Route path='/shop' component={ShopPage} />
+				<Route
+					exact
+					path='/signin'
+					render={() =>
+						currentUser ? <Redirect to='/' /> : <SignInAndSignUp />
+					}
+				/>
+				<Route exact path='/checkout' component={CheckoutPage} />
+			</Switch>
+		</div>
+	);
+};
 
 const mapDispatchToProps = (dispatch) => ({
 	checkUserSession: () => dispatch(checkUserSession()),

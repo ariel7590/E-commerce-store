@@ -6,7 +6,6 @@ import {
 	OptionsContainer,
 } from "./header.styles";
 import { ReactComponent as Logo } from "../../assets/084 crown.svg";
-import { auth } from "../../firebase/firebase.utils";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import { selectCartHidden } from "../../redux/cart/cart.selector";
