@@ -6,9 +6,8 @@ import ShopPage from "./pages/shop/shop.component";
 import Header from "./components/header/header.component";
 import SignInAndSignUp from "./pages/sign-in-and-sign-up/sign-in-and-sign-up.component";
 import CheckoutPage from "./pages/checkout/checkout.component";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentUser } from "./redux/user/user.selector";
-import { createStructuredSelector } from "reselect";
 import { checkUserSession } from "./redux/user/user.actions";
 
 const HatsPage = () => (
@@ -17,10 +16,13 @@ const HatsPage = () => (
 	</div>
 );
 
-const App = ({ checkUserSession, currentUser }) => {
+const App = () => {
+	const dispatch = useDispatch();
+	const currentUser = useSelector(selectCurrentUser);
+
 	useEffect(() => {
-		checkUserSession();
-	}, [checkUserSession]);
+		dispatch(checkUserSession());
+	}, []);
 
 	return (
 		<div className='App'>
@@ -41,12 +43,4 @@ const App = ({ checkUserSession, currentUser }) => {
 	);
 };
 
-const mapDispatchToProps = (dispatch) => ({
-	checkUserSession: () => dispatch(checkUserSession()),
-});
-
-const mapStateToProps = createStructuredSelector({
-	currentUser: selectCurrentUser,
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;
