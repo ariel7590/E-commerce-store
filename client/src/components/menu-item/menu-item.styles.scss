@@ -24,6 +24,10 @@
 
     &.large {
         height: 523px;
+
+        @media screen and (max-width: 800px) {
+          height: 200px;
+      }
     }
 
     &:first-child {
@@ -65,3 +69,22 @@
       }
     }
   }
+
+  @media screen and (max-width: 800px) {
+    .menu-item{
+      height: 200px;
+      margin-top: 0;
+
+      .content{
+        height: 100px;
+        width: 90px;
+        padding: 0 5px;
+
+        .subtitle {
+          font-weight: lighter;
+          font-size: 14px;
+        }
+      }
+    }
+    
+}
