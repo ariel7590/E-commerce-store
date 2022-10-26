@@ -8,3 +8,18 @@
     }
   }
   
+  @media screen and (max-width:800px) {
+    .sign-up{
+        width: 90%;
+        margin-left: 20px;
+        margin-top: 10px;
+    }
+
+    .title{
+        display: none;
+    }
+
+    .button{
+      margin-bottom: 10px;
+    }
+}

@@ -1,6 +1,31 @@
-.sign-in-and-sign-up{
+.sign-in-and-sign-up {
     width: 850px;
     display: flex;
     justify-content: space-between;
     margin: 30px auto;
+}
+
+.sign-in-and-sign-up-mobile{
+    display: none;
+}
+
+@media screen and (max-width:800px) {
+    .sign-in-and-sign-up{
+        display: none;
+    }
+    .sign-in-and-sign-up-mobile{
+        display: flex;
+        flex-direction: column;
+        width: 95%;
+        border: 2px solid rgb(214, 214, 214);
+        margin: 10vh auto;
+
+        .input-label{
+            background-color: rgb(214, 214, 214);
+        }
+
+        .checked-input-label{
+            background-color: white;
+        }
+    }
 }

@@ -12,3 +12,19 @@
         justify-content: space-between;
     }
 }
+
+@media screen and (max-width:800px) {
+    .sign-in{
+        width: 90%;
+        margin-left: 20px;
+        margin-top: 10px;
+    }
+
+    .title{
+        display: none;
+    }
+
+    .buttons{
+        margin-bottom: 10px;
+    }
+}
