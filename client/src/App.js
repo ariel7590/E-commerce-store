@@ -7,6 +7,7 @@ import { selectCurrentUser } from "./redux/user/user.selector";
 import { checkUserSession } from "./redux/user/user.actions";
 import Spinner from "./components/spinner/spinner.component";
 import ErrorBoundary from "./components/error-boundary/error-boundary.component";
+import ContactPage from "./pages/contact-page/contact-page.component";
 
 const HomePage = lazy(() => import("./pages/homepage/homepage.component"));
 const ShopPage = lazy(() => import("./pages/shop/shop.component"));
@@ -39,6 +40,7 @@ const App = () => {
 							}
 						/>
 						<Route exact path='/checkout' component={CheckoutPage} />
+						<Route exact path='/contact' component={ContactPage} />
 					</Suspense>
 				</ErrorBoundary>
 			</Switch>
