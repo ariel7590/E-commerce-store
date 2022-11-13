@@ -7,7 +7,6 @@ import { selectCurrentUser } from "./redux/user/user.selector";
 import { checkUserSession } from "./redux/user/user.actions";
 import Spinner from "./components/spinner/spinner.component";
 import ErrorBoundary from "./components/error-boundary/error-boundary.component";
-import ContactPage from "./pages/contact-page/contact-page.component";
 
 const HomePage = lazy(() => import("./pages/homepage/homepage.component"));
 const ShopPage = lazy(() => import("./pages/shop/shop.component"));
@@ -15,6 +14,7 @@ const SignInAndSignUp = lazy(() =>
 	import("./pages/sign-in-and-sign-up/sign-in-and-sign-up.component")
 );
 const CheckoutPage = lazy(() => import("./pages/checkout/checkout.component"));
+const ContactPage =lazy(()=>import("./pages/contact-page/contact-page.component")) ;
 
 const App = () => {
 	const dispatch = useDispatch();

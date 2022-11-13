@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import FormInput from "../../components/form-input/form-input.component";
 import CustomButton from "../../components/custom-button/custom-button.component";
-import { sendMessageStart } from "../../redux/contact/contact.actions";
 import axios from "axios";
 import "./contact-page.styles.scss";
 import { selectCurrentUser } from "../../redux/user/user.selector";
@@ -15,7 +14,6 @@ const ContactPage = () => {
 
 	const { subject, content } = message;
 
-	const dispatch = useDispatch();
 	const currentUser = useSelector(selectCurrentUser);
 
 	const handleChange = (e) => {
@@ -28,6 +26,7 @@ const ContactPage = () => {
 
 		if (currentUser !== null) {
 			const { displayName, email } = currentUser;
+
 			axios({
 				url: "email",
 				method: "post",
