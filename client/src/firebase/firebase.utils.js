@@ -43,20 +43,23 @@ export const addItemsToUserCart = async (userAuth, cartItem) => {
 	const userCartRef = firestore.collection(`users/${userAuth.uid}/cartItems`);
 
 	const snapShot = await userCartRef.get();
-	
+
 	try {
-		const { name, price } = cartItem;
-		const existingItem=await snapShot.docs.find(item=>item.data().name===name);
-		if(existingItem){
+		const { id, name, price, imageUrl } = cartItem;
+		const existingItem = await snapShot.docs.find(
+			(item) => item.data().id === id
+		);
+		if (existingItem) {
 			await userCartRef.doc(existingItem.id).set({
 				...existingItem.data(),
-				quantity: existingItem.data().quantity+1,
-			})
-		}
-		else{
+				quantity: existingItem.data().quantity + 1,
+			});
+		} else {
 			await userCartRef.doc().set({
+				id,
 				name,
 				price,
+				imageUrl,
 				quantity: 1,
 			});
 		}
@@ -65,6 +68,49 @@ export const addItemsToUserCart = async (userAuth, cartItem) => {
 	}
 
 	return userCartRef;
+};
+
+export const removeItemFromUsersCart = async (userAuth, itemToRemove) => {
+	if (!userAuth) return;
+
+	const userCartRef = firestore.collection(`users/${userAuth.uid}/cartItems`);
+
+	const snapShot = await userCartRef.get();
+
+	const itemInDb = await snapShot.docs.find(
+		(item) => item.data().id === itemToRemove.id
+	);
+	try {
+		if (itemToRemove.quantity > 1) {
+			await userCartRef.doc(itemInDb.id).set({
+				...itemToRemove,
+				quantity: itemToRemove.quantity - 1,
+			});
+		} else {
+			await clearItemFromUsersCart(userAuth, itemToRemove);
+		}
+	} catch (error) {
+		console.log("error at adding items", error.message);
+	}
+
+	return userCartRef;
+};
+
+export const clearItemFromUsersCart = async (userAuth, itemToClear) => {
+	if (!userAuth) return;
+
+	const userCartRef = firestore.collection(`users/${userAuth.uid}/cartItems`);
+
+	const snapShot = await userCartRef.get();
+
+	const itemInDb = await snapShot.docs.find(
+		(item) => item.data().id === itemToClear.id
+	);
+	try {
+		await userCartRef.doc(itemInDb.id).delete();
+	} catch (error) {
+		console.log("error at adding items", error.message);
+	}
 };
 
 export const addCollectionAndDocuments = async (

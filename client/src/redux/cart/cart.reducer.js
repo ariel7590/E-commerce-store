@@ -9,6 +9,11 @@ const INITIAL_STATE = {
 
 const cartReducer = (state = INITIAL_STATE, action) => {
 	switch (action.type) {
+		case CartActionTypes.SHOW_USERS_CART:
+			return {
+				...state,
+				cartItems: action.payload,
+			};
 		case CartActionTypes.TOGGLE_CART_HIDDEN:
 			return {
 				...state,
