@@ -34,8 +34,37 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
 			console.log("error creating user", error.message);
 		}
 	}
-
 	return userRef;
+};
+
+export const addItemsToUserCart = async (userAuth, cartItem) => {
+	if (!userAuth) return;
+
+	const userCartRef = firestore.collection(`users/${userAuth.uid}/cartItems`);
+
+	const snapShot = await userCartRef.get();
+	
+	try {
+		const { name, price } = cartItem;
+		const existingItem=await snapShot.docs.find(item=>item.data().name===name);
+		if(existingItem){
+			await userCartRef.doc(existingItem.id).set({
+				...existingItem.data(),
+				quantity: existingItem.data().quantity+1,
+			})
+		}
+		else{
+			await userCartRef.doc().set({
+				name,
+				price,
+				quantity: 1,
+			});
+		}
+	} catch (error) {
+		console.log("error at adding items", error.message);
+	}
+
+	return userCartRef;
 };
 
 export const addCollectionAndDocuments = async (
@@ -49,6 +78,26 @@ export const addCollectionAndDocuments = async (
 		const newDocRef = collectionRef.doc();
 		console.log(newDocRef);
 		batch.set(newDocRef, obj);
+	});
+
+	return await batch.commit();
+};
+
+// use this method to add a cartItems collection to all the existing users, since I added the cart to the firestore
+// after I had some users in it
+export const addCartItemstoUsers = async () => {
+	const userDocsArray = (await firestore.collection("users").get()).docs;
+	console.log(userDocsArray);
+	const batch = firestore.batch();
+
+	userDocsArray.forEach((userDoc) => {
+		const userRef = firestore
+			.collection("users")
+			.doc(userDoc.id)
+			.collection("cartItems")
+			.doc();
+		console.log(userRef);
+		batch.set(userRef, {});
 	});
 
 	return await batch.commit();
