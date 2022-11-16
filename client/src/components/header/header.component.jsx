@@ -4,6 +4,7 @@ import {
 	LogoContainer,
 	OptionLink,
 	OptionsContainer,
+	WelcomeContainer
 } from "./header.styles";
 import { ReactComponent as Logo } from "../../assets/084 crown.svg";
 import { useDispatch, useSelector } from "react-redux";
@@ -23,6 +24,10 @@ const Header = () => {
 			<LogoContainer to='/'>
 				<Logo className='logo' />
 			</LogoContainer>
+			<WelcomeContainer>
+				Welcome 
+				{currentUser ? ` ${currentUser.displayName}` : ' guest'}
+			</WelcomeContainer>
 			<OptionsContainer>
 				<OptionLink to='/shop'>SHOP</OptionLink>
 				<OptionLink to='/contact'>CONTACT</OptionLink>

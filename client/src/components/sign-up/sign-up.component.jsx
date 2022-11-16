@@ -4,6 +4,7 @@ import CustomButton from "../custom-button/custom-button.component";
 import { useDispatch } from "react-redux";
 import { signUpStart } from "../../redux/user/user.actions";
 import FormInput from "../form-input/form-input.component";
+import Swal from "sweetalert2";
 
 const SignUp = ({}) => {
 	const dispatch = useDispatch();
@@ -21,7 +22,11 @@ const SignUp = ({}) => {
 		event.preventDefault();
 
 		if (password !== confirmPassword) {
-			alert("Passwords don't match");
+			Swal.fire({
+				icon: 'error',
+				title: 'Oops...',
+				text: "Passwords don't match",
+			  })
 			return;
 		}
 

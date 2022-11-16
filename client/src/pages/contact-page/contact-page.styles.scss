@@ -23,3 +23,12 @@
         margin: 10px auto;
     }
 }
+
+@media screen and (max-width: 800px) {
+    .contact-page {
+        width: 75vw;
+        margin: 10vh auto;
+        display: flex;
+        flex-direction: column;
+    }
+}

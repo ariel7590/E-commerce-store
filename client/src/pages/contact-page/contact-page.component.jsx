@@ -5,6 +5,7 @@ import CustomButton from "../../components/custom-button/custom-button.component
 import axios from "axios";
 import "./contact-page.styles.scss";
 import { selectCurrentUser } from "../../redux/user/user.selector";
+import Swal from "sweetalert2";
 
 const ContactPage = () => {
 	const [message, setMessage] = useState({
@@ -38,15 +39,25 @@ const ContactPage = () => {
 				},
 			})
 				.then((response) => {
-					alert("Email sent successfuly");
+					Swal.fire({
+						icon: "success",
+						title: "Email sent successfuly",
+					});
 					setMessage({ subject: "", content: "" });
 				})
 				.catch((error) => {
 					console.log("Error ", error.message);
-					alert("There was an issue with sending the email!");
+					Swal.fire({
+						icon: "error",
+						title: "Oops...",
+						text: "There was an issue with sending the email!",
+					});
 				});
 		} else {
-			alert("You have to sign-in in order to contact us!");
+			Swal.fire({
+				icon: "info",
+				title: "You have to sign-in in order to contact us!",
+			});
 		}
 	};
 

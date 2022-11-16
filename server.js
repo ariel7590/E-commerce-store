@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
 const compression = require("compression");
-// const enforce = require("express-sslify");
+const enforce = require("express-sslify");
 const nodemailer = require("nodemailer");
 
 if (process.env.NODE_ENV !== "production") require("dotenv").config();
@@ -15,9 +15,9 @@ const port = process.env.PORT || 5000;
 app.use(compression());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(enforce.HTTPS({ trustProtoHeader: true }));
 
 if (process.env.NODE_ENV === "production") {
+	app.use(enforce.HTTPS({ trustProtoHeader: true }));
 	app.use(express.static(path.join(__dirname, "client/build")));
 
 	app.get("*", function (req, res) {
@@ -83,6 +83,64 @@ app.post("/email", (req, res) => {
 					<br><br>
 					${replaceAll(content, "\n", "<br>")}
 				</div>
+			</div>`,
+	};
+
+	transporter.sendMail(mailBody, (error, info) => {
+		if (error) {
+			res.status(500).send({ error: error });
+		} else {
+			res.status(200).send({ success: info });
+		}
+	});
+});
+
+app.post("/receipt", (req, res) => {
+	var transporter = nodemailer.createTransport({
+		service: "gmail",
+		auth: {
+			user: "maillaproyectim",
+			pass: "bjicyyxrkoneodyb",
+		},
+	});
+
+	const { cartItems, total } = req.body;
+
+	const mailBody = {
+		from: "maillaproyectim",
+		to: "ariel7590@gmail.com",
+		subject: "Thank you for your purchase!",
+		html: `
+			<div style="border:3px solid black; margin: auto; width: 388px; min-height: 500px; border-radius: 8px; overflow: hidden;">
+				<div dir="ltr" style="padding: 10px 2px; display:flex; justify-content: space-between;">
+					<img src="https://iili.io/y2f7CG.png" alt="crwn-clothing" width="70" height="70">
+					<h1 style="font-family: 'open sans serif'; margin-left:20px; color: #abacaf;">Your Order</h1>
+				</div>
+				<br>
+				<div dir="ltr" style="margin-top: 30px; padding: 10px; font-family: 'open sans'; font-size: 16px">
+					<table style="width: 100%;">
+						<tr style="background-color: black; color:white;" align="center">
+							<th />
+							<th>Name</th>
+							<th>Price</th>
+							<th>Amount</th>
+							<th>Total</th>
+						</tr>
+						${cartItems.map(
+							(item) => `
+						<tr align="center" key=${item.id}>
+							<td><img src="${item.imageUrl}" width="70" height="70" /></td>
+							<td>${item.name}</td>
+							<td>${item.price}$</td>
+							<td>${item.quantity}</td>
+							<td>${item.quantity * item.price}$</td>
+						</tr>
+						`
+						)}
+					</table>
+				</div>
+				<br>
+				<span align="right" style="font-weight: bold; font-size: 20px; color: #abacaf; padding: 10px 10px;">Total: ${total}$</span>
 			</div>`,
 	};
 

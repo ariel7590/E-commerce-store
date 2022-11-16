@@ -21,7 +21,8 @@
     "express": "^4.16.4",
     "express-sslify": "^1.2.0",
     "nodemailer": "^6.8.0",
-    "stripe": "6.28.0"
+    "stripe": "6.28.0",
+    "sweetalert2": "^11.6.8"
   },
   "devDependencies": {
     "concurrently": "^7.4.0",

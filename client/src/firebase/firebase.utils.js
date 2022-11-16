@@ -90,7 +90,7 @@ export const removeItemFromUsersCart = async (userAuth, itemToRemove) => {
 			await clearItemFromUsersCart(userAuth, itemToRemove);
 		}
 	} catch (error) {
-		console.log("error at adding items", error.message);
+		console.log("error at removing items", error.message);
 	}
 
 	return userCartRef;
@@ -109,7 +109,23 @@ export const clearItemFromUsersCart = async (userAuth, itemToClear) => {
 	try {
 		await userCartRef.doc(itemInDb.id).delete();
 	} catch (error) {
-		console.log("error at adding items", error.message);
+		console.log("error at removing items", error.message);
+	}
+};
+
+export const clearUsersCartAfterPayment = async (userAuth) => {
+	if (!userAuth) return;
+
+	const userCartRef = firestore.collection(`users/${userAuth.uid}/cartItems`);
+
+	const snapShot = await userCartRef.get();
+
+	try {
+		await snapShot.docs.map(
+			(item) => userCartRef.doc(item.id).delete()
+		);
+	} catch (error) {
+		console.log("error at removing items", error.message);
 	}
 };
 

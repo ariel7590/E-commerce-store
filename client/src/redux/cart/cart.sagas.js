@@ -7,7 +7,8 @@ import {
 	addItemsToUserCart,
 	firestore,
 	removeItemFromUsersCart,
-	clearItemFromUsersCart
+	clearItemFromUsersCart,
+	clearUsersCartAfterPayment,
 } from "../../firebase/firebase.utils";
 
 export function* addItemToFirebase({ payload: { id, name, price, imageUrl } }) {
@@ -49,7 +50,7 @@ export function* removeItemFromFirebase(action) {
 	}
 }
 
-export function* clearItemFromFirebase(action){
+export function* clearItemFromFirebase(action) {
 	const userAuth = yield getCurrentUser();
 	if (!userAuth) return;
 	try {
@@ -61,6 +62,15 @@ export function* clearItemFromFirebase(action){
 }
 export function* clearCartOnSignOut() {
 	yield put(clearCart());
+}
+export function* clearCartAfterPayment() {
+	const userAuth = yield getCurrentUser();
+	if (!userAuth) return;
+	try {
+		clearUsersCartAfterPayment(userAuth);
+	} catch (error) {
+		console.log("Error: " + error.message);
+	}
 }
 
 export function* onSignOutSuccess() {
@@ -79,8 +89,12 @@ export function* onRemoveItemFromCart() {
 	yield takeLatest(CartActionTypes.REMOVE_ITEM, removeItemFromFirebase);
 }
 
-export function* onClearItemFromCart(){
+export function* onClearItemFromCart() {
 	yield takeLatest(CartActionTypes.CLEAR_ITEM_FROM_CART, clearItemFromFirebase);
+}
+
+export function* onClearCartAfterPayment() {
+	yield takeLatest(CartActionTypes.CLEAR_CART, clearCartAfterPayment);
 }
 export function* cartSagas() {
 	yield all([
@@ -88,6 +102,7 @@ export function* cartSagas() {
 		call(onAddCartItem),
 		call(onSignInSuccess),
 		call(onRemoveItemFromCart),
-		call(onClearItemFromCart)
+		call(onClearItemFromCart),
+		call(onClearCartAfterPayment),
 	]);
 }
