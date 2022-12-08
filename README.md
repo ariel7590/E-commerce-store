@@ -1,5 +1,6 @@
 # Crwn-clothing
-e-commerce store project for my portfolio
+E-commerce store project for my portfolio.
+Url: https://crwn-ariel-project.herokuapp.com/
 
 ## Table of contents
 * [General info](#general-info)
