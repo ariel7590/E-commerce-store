@@ -4,6 +4,7 @@ Url: https://crwn-ariel-project.herokuapp.com/
 
 ## Table of contents
 * [General info](#general-info)
+* [Dependencies] (#dependencies)
 * [Setup](#setup)
 * [Technologies](#technologies)
 * [Features](#features)
@@ -18,7 +19,7 @@ Pre-Installation requirements:
 * `node v14.16.0`
 * `npm v6.14.11`
 
-### Installation Guide
+### Setup
 *  In your terminal use the following commands:
 1. Clone the repo.
 2. Run the command `npm i | npm install` to install all dependencies.
