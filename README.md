@@ -4,8 +4,6 @@ Url: https://crwn-ariel-project.herokuapp.com/
 
 ## Table of contents
 * [General info](#general-info)
-* [Dependencies] (#dependencies)
-* [Setup](#setup)
 * [Technologies](#technologies)
 * [Features](#features)
 * [Screenshots](#screenshots)
