@@ -45,3 +45,23 @@ Pre-Installation requirements:
 * Get a receipt to your email using Nodemailer
 * Contact the admin
 
+## Screenshots
+Homepage (desktop version):
+
+![Homepage-web](./client/public/Homepage_web.png)
+
+Homepage (mobile version):
+
+![Homepage-mobile](./client/public/Homepage_mobile.png)
+
+Shop:
+
+![Shop](./client/public/shop.png)
+
+Sign in & sign up:
+
+![Sign-in-up](./client/public/sign-in-up.png)
+
+Checkout Page:
+
+![Checkout](./client/public/checkout.png)
