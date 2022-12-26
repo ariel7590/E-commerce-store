@@ -1,6 +1,6 @@
 # Crwn-clothing
 E-commerce store project for my portfolio.\
-Url: https://crwn-ariel-project.herokuapp.com/
+Url: https://crwn-ariel-project-server.onrender.com/
 
 ## Table of contents
 * [General info](#general-info)
