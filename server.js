@@ -55,15 +55,20 @@ function replaceAll(originalStr, find, replace) {
 	return str.replace(new RegExp(find, "g"), replace);
 }
 
-app.post("/email", (req, res) => {
-	var transporter = nodemailer.createTransport({
+function createTransporter() {
+	const transporter = nodemailer.createTransport({
 		service: "gmail",
 		auth: {
 			user: "maillaproyectim",
-			pass: "bjicyyxrkoneodyb",
+			pass: process.env.MAIL_PASSWORD,
 		},
 	});
 
+	return transporter;
+}
+
+app.post("/email", (req, res) => {
+	var transporter = createTransporter();
 	const { subject, content, displayName, email } = req.body;
 	const mailBody = {
 		from: email,
@@ -96,13 +101,8 @@ app.post("/email", (req, res) => {
 });
 
 app.post("/receipt", (req, res) => {
-	var transporter = nodemailer.createTransport({
-		service: "gmail",
-		auth: {
-			user: "maillaproyectim",
-			pass: "bjicyyxrkoneodyb",
-		},
-	});
+	
+	var transporter = createTransporter();
 
 	const { cartItems, total } = req.body;
 
